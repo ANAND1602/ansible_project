@@ -1,0 +1,10 @@
+eck_connectivity/tasks/main.yml
+---
+- name: Check ping connectivity
+  ansible.builtin.ping:
+
+- name: Check SSH port 22
+  ansible.builtin.wait_for:
+    port: 22
+    timeout: 5
+    state: started

@@ -1,0 +1,8 @@
+# playbook.yml
+---
+- name: Run connectivity checks
+  hosts: all
+  gather_facts: no
+  roles:
+    - check_connectivity
+          
