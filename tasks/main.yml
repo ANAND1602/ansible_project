@@ -10,8 +10,8 @@
 
 - name: Read OS release file
   ansible.builtin.command: cat /etc/os-release
-  register: os_info
-  changed_when: false
+    register: os_info
+    changed_when: false
 
 - name: Display OS release info
   ansible.builtin.debug:
