@@ -1,4 +1,3 @@
-eck_connectivity/tasks/main.yml
 ---
 - name: Check ping connectivity
   ansible.builtin.ping:
@@ -8,3 +7,13 @@ eck_connectivity/tasks/main.yml
     port: 22
     timeout: 5
     state: started
+
+- name: Read OS release file
+  ansible.builtin.command: cat /etc/os-release
+  register: os_info
+  changed_when: false
+
+- name: Display OS release info
+  ansible.builtin.debug:
+    msg: "{{ os_info.stdout_lines }}"
+
