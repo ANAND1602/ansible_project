@@ -1,19 +1,25 @@
 ---
-- name: Check ping connectivity
-  ansible.builtin.ping:
+- name: Connectivity and OS Check
+  hosts: all
+  gather_facts: false
+  become: false
 
-- name: Check SSH port 22
-  ansible.builtin.wait_for:
-    port: 22
-    timeout: 5
-    state: started
+  tasks:
+    - name: Check ping connectivity
+      ansible.builtin.ping:
 
-- name: Read OS release file
-  ansible.builtin.command: cat /etc/os-release
-    register: os_info
-    changed_when: false
+    - name: Check SSH port 22
+      ansible.builtin.wait_for:
+        port: 22
+        timeout: 5
+        state: started
 
-- name: Display OS release info
-  ansible.builtin.debug:
-    msg: "{{ os_info.stdout_lines }}"
+    - name: Read OS release file
+      ansible.builtin.command: cat /etc/os-release
+      register: os_info
+      changed_when: false
+
+    - name: Display OS release info
+      ansible.builtin.debug:
+        msg: "{{ os_info.stdout_lines }}"
 
