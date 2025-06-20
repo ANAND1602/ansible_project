@@ -14,24 +14,24 @@
     #       dest: /runner/project/inventories/{{ region }}.yml
     #       mode: "0644"
     
-    - name: Generate new inventory data
-      ansible.builtin.command: "ansible-inventory --list --export -i /home/gituser/ansible_project/check_connectivity/ansible_project/inventories/{{ region }}.yml --output output.json --playbook-dir /home/gituser/ansible_project/check_connectivity/ansible_project/inventories" # noqa yaml[line-length]
-      changed_when: false
+   # - name: Generate new inventory data
+  #    ansible.builtin.command: "ansible-inventory --list --export -i /home/gituser/ansible_project/check_connectivity/ansible_project/inventories/{{ region }}.yml --output output.json --playbook-dir /home/gituser/ansible_project/check_connectivity/ansible_project/inventories" # noqa yaml[line-length]
+   #   changed_when: false
 
-    - name: Replace inventory script
-      ansible.builtin.copy:
-        src: generate-inventory.py
-        dest: /runner/inventory/hosts
-        mode: "0700"
+    #- name: Replace inventory script
+     # ansible.builtin.copy:
+      #  src: generate-inventory.py
+       # dest: /runner/inventory/hosts
+        #mode: "0700"
 
-    - name: Refresh Inventory
-      ansible.builtin.meta: refresh_inventory
+#    - name: Refresh Inventory
+ #     ansible.builtin.meta: refresh_inventory
+#
+ #   - name: Print all hosts and groups
+  #    ansible.builtin.debug:
+   #     var: groups
 
-    - name: Print all hosts and groups
-      ansible.builtin.debug:
-        var: groups
-
-- name: Deploy CarbonBlackPSC
+- name: my first play
   hosts: all
   become: true
   gather_facts: true
