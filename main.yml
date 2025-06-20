@@ -15,7 +15,7 @@
     #       mode: "0644"
     
     - name: Generate new inventory data
-      ansible.builtin.command: "ansible-inventory --list --export -i /home/gituser/ansible_project/check_connectivity/ansible_project/inventories/{{ region }}.yml --output output.json --playbook-dir /home/gituser/ansible_project/check_connectivity/ansible_project/inventories" # noqa yaml[line-length]
+      ansible.builtin.command: "ansible-inventory --list --export -i /runner/project/inventories/{{ region }}.yml --output output.json --playbook-dir /runner/project/inventories" # noqa yaml[line-length]
       changed_when: false
 
     - name: Replace inventory script
