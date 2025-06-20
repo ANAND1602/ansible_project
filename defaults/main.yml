@@ -1,2 +1,3 @@
 ---
 # defaults file for check_connectivity
+ansible_user: ansible
