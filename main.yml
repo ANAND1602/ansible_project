@@ -1,0 +1,51 @@
+---
+- name: Generate dynamic inventory data # Workaround for https://github.com/ansible/awx/issues/5692
+  hosts: localhost
+  connection: local
+  become: false
+  gather_facts: false
+  tags:
+    - update_inventory
+    - always
+  tasks:
+    # - name: Gerate new inventory file
+    #     ansible.builtin.copy:
+    #       content: "{{ provided_inventory }}"
+    #       dest: /runner/project/inventories/{{ region }}.yml
+    #       mode: "0644"
+    
+    - name: Generate new inventory data
+      ansible.builtin.command: "ansible-inventory --list --export -i /runner/project/inventories/{{ region }}.yml --output output.json --playbook-dir /runner/project/inventories" # noqa yaml[line-length]
+      changed_when: false
+
+    - name: Replace inventory script
+      ansible.builtin.copy:
+        src: generate-inventory.py
+        dest: /runner/inventory/hosts
+        mode: "0700"
+
+    - name: Refresh Inventory
+      ansible.builtin.meta: refresh_inventory
+
+    - name: Print all hosts and groups
+      ansible.builtin.debug:
+        var: groups
+
+- name: Deploy CarbonBlackPSC
+  hosts: all
+  become: true
+  gather_facts: true
+  roles:
+    - name: check the conn
+      role: conn
+      #tags:
+      #  - carbonblack_psc
+      #  - install
+
+    #- name: Uninstall CarbonBlackPSC
+    #  role: carbonblack_psc_uninstall
+     # tags:
+     #   - carbonblack_psc
+      #  - uninstall
+       # - never
+ 
